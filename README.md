@@ -2,6 +2,7 @@
 Steps to set up the Vehicle Inventory API:
 
 1. Download the code from following GITHUB url:
+
 https://github.com/rameshmsat126/VehicleInventory
 
 2. Import the code into STS/Eclipse as Maven existing project.
@@ -18,6 +19,7 @@ https://github.com/rameshmsat126/VehicleInventory
 7. Welcome Page URL after appication got successfully deployed:
 
 	URL : http://localhost:8080/VehicleInventory/
+	
 	Message : Welcome to Vehicle Inventory.
 
 Steps to start Vehicle Inventory API Consumption:
@@ -26,6 +28,7 @@ Steps to start Vehicle Inventory API Consumption:
 
 
 URL : http://localhost:8080/VehicleInventory/vehicle/repo
+
 Method Type : POST
 
 Response Message : Inventory Database created successfully
@@ -36,7 +39,9 @@ Response Message : Inventory Database created successfully
 Vechicle Types: CAR, TRUCK,  AIRPLANE, DRONE, AMPHIBIAN, BOAT
 
 URL: http://localhost:8080/VehicleInventory/vehicle/<Vehicle Type>
+	
 Example 1: http://localhost:8080/VehicleInventory/vehicle/CAR
+	
 Example 2: http://localhost:8080/VehicleInventory/vehicle/TRUCK
 
 Method Type : POST
@@ -54,7 +59,9 @@ Reponse Message : Vehicle Inserted Successfully
 
 
 3. Retrieve Vehicle Details by Vehicle ID
+
 URL : http://localhost:8080/VehicleInventory/vehicle/<Vehicle ID>
+	
 Example : http://localhost:8080/VehicleInventory/vehicle/1
 
 Method Type : GET
@@ -78,6 +85,7 @@ Reponse Message :
 4. Retrieve All Vehicle Details by Year
 
 URL : http://localhost:8080/VehicleInventory/vehicle/year/<Year>
+	
 Example: http://localhost:8080/VehicleInventory/vehicle/year/2019
 
 Method Type : GET
@@ -149,6 +157,7 @@ Reponse Message :
 
 
 6. Update Vehicle Details 
+
 URL : http://localhost:8080/VehicleInventory/vehicle/update
 
 Method Type : PUT
