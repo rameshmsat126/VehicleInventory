@@ -62,7 +62,7 @@ Reponse Message : Vehicle Inserted Successfully
 
 URL : http://localhost:8080/VehicleInventory/vehicleSearch/type/<Vehicle ID>
 	
-Example : http://localhost:8080/VehicleInventory/vehicle/type/1
+Example : http://localhost:8080/VehicleInventory/vehicleSearch/type/1
 
 Method Type : GET
 
