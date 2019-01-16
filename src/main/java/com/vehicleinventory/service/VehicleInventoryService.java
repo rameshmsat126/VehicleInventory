@@ -6,12 +6,12 @@ import com.vehicleinventory.model.Vehicle;
 
 public interface VehicleInventoryService {
 
-	public void setVehicleInventoryRepo() throws SQLException;
+	public boolean setVehicleInventoryRepo() throws SQLException;
 	
-	public void insertVehicle(Vehicle vehicle) throws SQLException;
+	public Vehicle insertVehicle(Vehicle vehicle) throws SQLException;
 
 	public Vehicle updateVehicle(Vehicle vehicle) throws SQLException;
 
-	public void deleteVehicle() throws SQLException;
+	public boolean deleteVehicle() throws SQLException;
 
 }

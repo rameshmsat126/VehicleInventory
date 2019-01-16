@@ -13,12 +13,12 @@ public class VehicleConstants {
 	public static final String DB_CONNECTION = "jdbc:h2:mem:test;DB_CLOSE_DELAY=-1";
 	public static final String DB_USER = "";
 	public static final String DB_PASSWORD = "";
-	public static final String VEHICLE_TYPE = "/vehicle/repo";
-	public static final String VEHICLE_INSERT = "/vehicle/{vehicleType}";
-	public static final String VEHICLE_GET = "/vehicle/{vehicleType}";
-	public static final String VEHICLE_GETALL = "/vehicle/all";
-	public static final String VEHICLE_GET_YEAR = "/vehicle/year/{year}";
-	public static final String VEHICLE_PUT = "/vehicle/update";
-	public static final String VEHICLE_DELETE_BY_ID = "/vehicle/delete/{id}";
-	public static final String VEHICLE_DELETE_RECENT = "/vehicle/delete";
+	public static final String VEHICLE_BASE_URI = "/vehicle";
+	public static final String VEHICLE_SEARCH_BASE_URI = "/vehicleSearch";
+	public static final String VEHICLE_INFO_MESSAGE_URI = "/infoMessage";
+	public static final String VEHICLE_REPO_URI = "/repo";
+	public static final String VEHICLE_TYPE_PATH_PARAM = "/type/{vehicleType}";
+	public static final String GET_VEHICLE_DATA_BASED_ON_YEAR_URI = "/year";
+	public static final String YEAR_PATH__PARAM="/{year}";
+	public static final String VEHICLE_ID_PATH_PARAM = "{id}";
 }

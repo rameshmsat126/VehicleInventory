@@ -24,9 +24,10 @@ public class VehicleInventoryDaoImpl implements VehicleInventoryDao {
 	
 	private static final Logger logger = LoggerFactory.getLogger(VehicleInventoryDaoImpl.class);
     
-    public void setVehicleInventoryRepo() throws SQLException {
+    public boolean setVehicleInventoryRepo() throws SQLException {
 		vehicleTypeBuild();
 		vehicleBuild();
+		return true;
 	}
 
 	private void vehicleTypeBuild() throws SQLException {
@@ -69,7 +70,7 @@ public class VehicleInventoryDaoImpl implements VehicleInventoryDao {
 	
 
 	@Override
-	public void insertVehicle(Vehicle vehicle) throws SQLException {
+	public Vehicle insertVehicle(Vehicle vehicle) throws SQLException {
 		Connection connection = VehicleDBConnection.getDBConnection();
 		try {
 			connection.setAutoCommit(false);
@@ -83,6 +84,7 @@ public class VehicleInventoryDaoImpl implements VehicleInventoryDao {
 		} finally {
 			connection.close();
 		}
+		return vehicle;
 	}
 
 	private void prepareVehicleInsert(Vehicle vehicle, PreparedStatement insertPreparedStatement)
@@ -116,19 +118,22 @@ public class VehicleInventoryDaoImpl implements VehicleInventoryDao {
 		return vehicle;
 	}
 
-	public void deleteVehicle() throws SQLException {
+	public boolean deleteVehicle() throws SQLException {
 		Connection connection =VehicleDBConnection.getDBConnection();
 		Statement stmt = null;
+		boolean status=false;
 		try {
 			connection.setAutoCommit(false);
 			stmt = connection.createStatement();
             stmt.executeUpdate(VehicleInventorySQL.DELETE_VEHICLE_INVENTORY_SQL);
             stmt.close();
 			connection.commit();
+			status=true;			
 
 		}finally {
 				connection.close();
 		}
+		return status;
 	}
 	
 }

@@ -24,31 +24,32 @@ import com.vehicleinventory.service.VehicleInventorySearchService;
  *
  */
 @RestController
+@RequestMapping(VehicleConstants.VEHICLE_SEARCH_BASE_URI)
 public class VehicleInventorySearchController {
 
 	private static final Logger logger = LoggerFactory.getLogger(VehicleInventorySearchController.class);
 
 	@Autowired
-	private VehicleInventorySearchService service;
+	private VehicleInventorySearchService vehicleInventorySearchService;
 
 	/**
 	 * Fetch all the vehicle inventory details
 	 * 
 	 * @return
 	 */
-	@RequestMapping(value = VehicleConstants.VEHICLE_GETALL, method = RequestMethod.GET)
+	@RequestMapping(method = RequestMethod.GET)
 	public @ResponseBody ResponseEntity<List<Vehicle>> getAllVehicles() {
 		logger.info("Start getAllVehicles.");
 		List<Vehicle> vehicles = null;
 		try {
-			vehicles = service.getAllVehicles();
+			vehicles = vehicleInventorySearchService.getAllVehicles();
 			if (CollectionUtils.isEmpty(vehicles)) {
-				return new ResponseEntity<List<Vehicle>>(HttpStatus.NO_CONTENT);
+				return new ResponseEntity<List<Vehicle>>(vehicles,HttpStatus.NO_CONTENT);
 			}
 			return new ResponseEntity<List<Vehicle>>(vehicles, HttpStatus.OK);
 		} catch (SQLException e) {
 			logger.error("Exception Message " + e.getLocalizedMessage());
-			return new ResponseEntity<List<Vehicle>>(vehicles, HttpStatus.BAD_REQUEST);
+			return new ResponseEntity<List<Vehicle>>(vehicles, HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
 
@@ -58,17 +59,16 @@ public class VehicleInventorySearchController {
 	 * @param vehicleType
 	 * @return
 	 */
-	@RequestMapping(value = VehicleConstants.VEHICLE_GET, method = RequestMethod.GET)
-	public @ResponseBody ResponseEntity<Vehicle> getVehicle(@PathVariable("vehicleType") int vehicleType) {
+	@RequestMapping(value = VehicleConstants.VEHICLE_TYPE_PATH_PARAM, method = RequestMethod.GET)
+	public @ResponseBody ResponseEntity<Vehicle> getVehicleById(@PathVariable("vehicleType") int vehicleType) {
 		logger.info("Start getVehicle.");
 		Vehicle vehicle = null;
 		try {
-			vehicle = service.getVehicle(vehicleType);
-
+			vehicle = vehicleInventorySearchService.getVehicle(vehicleType);
 			return new ResponseEntity<Vehicle>(vehicle, HttpStatus.OK);
 		} catch (SQLException e) {
 			logger.error("Exception Message " + e.getLocalizedMessage());
-			return new ResponseEntity<Vehicle>(vehicle, HttpStatus.BAD_REQUEST);
+			return new ResponseEntity<Vehicle>(vehicle, HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
 
@@ -78,19 +78,19 @@ public class VehicleInventorySearchController {
 	 * @param year
 	 * @return
 	 */
-	@RequestMapping(value = VehicleConstants.VEHICLE_GET_YEAR, method = RequestMethod.GET)
+	@RequestMapping(value=VehicleConstants.GET_VEHICLE_DATA_BASED_ON_YEAR_URI+VehicleConstants.YEAR_PATH__PARAM, method = RequestMethod.GET)
 	public @ResponseBody ResponseEntity<List<Vehicle>> getVehiclesByYear(@PathVariable("year") int year) {
 		logger.info("Start get vehicles by year.");
 		List<Vehicle> vehicles = null;
 		try {
-			vehicles = service.getVehiclesByYear(year);
+			vehicles = vehicleInventorySearchService.getVehiclesByYear(year);
 			if (CollectionUtils.isEmpty(vehicles)) {
-				return new ResponseEntity<List<Vehicle>>(HttpStatus.NO_CONTENT);
+				return new ResponseEntity<List<Vehicle>>(vehicles,HttpStatus.NO_CONTENT);
 			}
 			return new ResponseEntity<List<Vehicle>>(vehicles, HttpStatus.OK);
 		} catch (SQLException e) {
 			logger.error("Exception Message " + e.getLocalizedMessage());
-			return new ResponseEntity<List<Vehicle>>(vehicles, HttpStatus.BAD_REQUEST);
+			return new ResponseEntity<List<Vehicle>>(vehicles, HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
 }

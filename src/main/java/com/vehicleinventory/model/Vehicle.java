@@ -3,12 +3,18 @@
  */
 package com.vehicleinventory.model;
 
+import java.io.Serializable;
+
 /**
- * @author Ishitha&Geetham
+ * @author RameshReddy Komma
  *
  */
-public class Vehicle{
+public class Vehicle implements Serializable{
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -9085209607485211233L;
 	private int id;
 	private VehicleType type;
 	private String name;
@@ -16,6 +22,11 @@ public class Vehicle{
 	private String make;
 	private String model;
 	private String engine;
+	
+    public Vehicle()
+    {
+    	
+    }
 	/**
 	 * @return the type
 	 */

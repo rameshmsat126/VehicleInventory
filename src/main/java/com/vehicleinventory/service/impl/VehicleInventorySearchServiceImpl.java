@@ -18,17 +18,17 @@ import com.vehicleinventory.service.VehicleInventorySearchService;
 public class VehicleInventorySearchServiceImpl implements VehicleInventorySearchService{
 
 	@Autowired
-	private VehicleInventorySearchDao vehicleInventoryDao;
+	private VehicleInventorySearchDao vehicleInventorySearchDao;
 	
 	public List<Vehicle> getAllVehicles() throws SQLException {
-		return (List<Vehicle>) vehicleInventoryDao.getAllVehicles();
+		return (List<Vehicle>) vehicleInventorySearchDao.getAllVehicles();
 	}
 
 	public List<Vehicle> getVehiclesByYear(int year) throws SQLException {
-		return (List<Vehicle>) vehicleInventoryDao.getVehiclesByYear(year);
+		return (List<Vehicle>) vehicleInventorySearchDao.getVehiclesByYear(year);
 	}
 
 	public Vehicle getVehicle(int type) throws SQLException {
-		return (Vehicle) vehicleInventoryDao.getVehicle(type);
+		return (Vehicle) vehicleInventorySearchDao.getVehicle(type);
 	}
 }

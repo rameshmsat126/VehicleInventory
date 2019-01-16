@@ -1,7 +1,6 @@
 package com.vehicleinventory.controller;
 
 import java.sql.SQLException;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,12 +19,14 @@ import com.vehicleinventory.model.Vehicle;
 import com.vehicleinventory.model.VehicleType;
 import com.vehicleinventory.service.VehicleInventoryService;
 
+
 /**
  * @author RameshReddy Komma
  *
  */
 
 @RestController
+@RequestMapping(VehicleConstants.VEHICLE_BASE_URI)
 public class VehicleInventoryController {
 
 	private static final Logger logger = LoggerFactory.getLogger(VehicleInventoryController.class);
@@ -33,9 +34,9 @@ public class VehicleInventoryController {
 	@Autowired
 	private VehicleInventoryService service;
 
-	@RequestMapping("/")
-	public String welcome() {
-		return "Welcome to Vehicle Inventory.";
+	@RequestMapping(VehicleConstants.VEHICLE_INFO_MESSAGE_URI)
+	public @ResponseBody ResponseEntity<String> vehicleInfoMessage() {	
+		return new ResponseEntity<String>("Welcome to Vehicle Inventory.", HttpStatus.OK);
 	}
 
 	/**
@@ -43,7 +44,7 @@ public class VehicleInventoryController {
 	 * 
 	 * @return
 	 */
-	@RequestMapping(value = VehicleConstants.VEHICLE_TYPE, method = RequestMethod.POST)
+	@RequestMapping(value = VehicleConstants.VEHICLE_REPO_URI, method = RequestMethod.POST)
 	public @ResponseBody ResponseEntity<String> setVehicleInventoryRepo() {
 		logger.info("Start creating Vehicles DB");
 		try {
@@ -51,7 +52,7 @@ public class VehicleInventoryController {
 			return new ResponseEntity<String>("Inventory Database created successfully", HttpStatus.CREATED);
 		} catch (SQLException e) {
 			logger.error("Exception Message " + e.getLocalizedMessage());
-			return new ResponseEntity<String>("Vehicle DB creation Failed", HttpStatus.NOT_IMPLEMENTED);
+			return new ResponseEntity<String>("Vehicle DB creation Failed", HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
 
@@ -62,17 +63,17 @@ public class VehicleInventoryController {
 	 * @param vehicle
 	 * @return
 	 */
-	@RequestMapping(value = VehicleConstants.VEHICLE_INSERT, method = RequestMethod.POST)
-	public @ResponseBody ResponseEntity<String> insertVehicle(@PathVariable("vehicleType") VehicleType vehicleType,
+	@RequestMapping(value = VehicleConstants.VEHICLE_TYPE_PATH_PARAM, method = RequestMethod.POST)
+	public @ResponseBody  ResponseEntity<?> insertVehicle(@PathVariable("vehicleType") VehicleType vehicleType,
 			@RequestBody Vehicle vehicle) {
 		logger.info("Start insertVehicle.");
 		try {
 			vehicle.setType(vehicleType);
 			service.insertVehicle(vehicle);
-			return new ResponseEntity<String>("Vehicle Inserted Successfully", HttpStatus.CREATED);
+			return new ResponseEntity<Vehicle>(vehicle, HttpStatus.CREATED);
 		} catch (SQLException e) {
 			logger.error("Exception Message " + e.getLocalizedMessage());
-			return new ResponseEntity<String>("Vehicle Insertion Failed", HttpStatus.NOT_IMPLEMENTED);
+			return new ResponseEntity<String>("Vehicle Insertion Failed", HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 
 	}
@@ -83,14 +84,16 @@ public class VehicleInventoryController {
 	 * @param vehicle
 	 * @return Vehicle
 	 */
-	@RequestMapping(value = VehicleConstants.VEHICLE_PUT, method = RequestMethod.PUT, consumes = MediaType.APPLICATION_JSON_VALUE)
-	public @ResponseBody Vehicle updateVehicle(@RequestBody Vehicle vehicle) {
+	@RequestMapping(method = RequestMethod.PUT, consumes = MediaType.APPLICATION_JSON_VALUE)
+	public @ResponseBody ResponseEntity<?> updateVehicle(@RequestBody Vehicle vehicle) {
 		logger.info("Start Update Vehicle::" + vehicle.getId());
 		try {
-			return service.updateVehicle(vehicle);
+			service.updateVehicle(vehicle);
+			return new ResponseEntity<Vehicle>(vehicle, HttpStatus.OK);
+			
 		} catch (SQLException e) {
 			logger.error("Exception Message " + e.getLocalizedMessage());
-			return vehicle;
+			return new ResponseEntity<String>("Vehicle Updation Failed", HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 
 	}
@@ -101,7 +104,7 @@ public class VehicleInventoryController {
 	 * @param id
 	 * @return Vehicle
 	 */
-	@RequestMapping(value = VehicleConstants.VEHICLE_DELETE_RECENT, method = RequestMethod.DELETE)
+	@RequestMapping(method = RequestMethod.DELETE)
 	public @ResponseBody ResponseEntity<String> deleteVehicle() {
 		logger.info("Start Delete Vehicle.");
 		try {
@@ -109,7 +112,7 @@ public class VehicleInventoryController {
 			return new ResponseEntity<String>("Vehicle Deleted Successfully", HttpStatus.OK);
 		} catch (SQLException e) {
 			logger.error("Exception Message " + e.getLocalizedMessage());
-			return new ResponseEntity<String>("Vehicle Insertion Failed", HttpStatus.BAD_REQUEST);
+			return new ResponseEntity<String>("Vehicle Deletion Failed", HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
 

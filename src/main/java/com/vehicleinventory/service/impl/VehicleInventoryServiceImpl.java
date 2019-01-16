@@ -19,12 +19,15 @@ public class VehicleInventoryServiceImpl implements VehicleInventoryService {
 	@Autowired
 	private VehicleInventoryDao vehicleInventoryDao;
 
-	public void setVehicleInventoryRepo() throws SQLException {
-		vehicleInventoryDao.setVehicleInventoryRepo();
+	@Override
+	public boolean setVehicleInventoryRepo() throws SQLException {
+		return vehicleInventoryDao.setVehicleInventoryRepo();
 	}
 
-	public void insertVehicle(Vehicle vehicle) throws SQLException {
+	@Override
+	public Vehicle insertVehicle(Vehicle vehicle) throws SQLException {
 		vehicleInventoryDao.insertVehicle(vehicle);
+		return vehicle;
 	}
 
 	@Override
@@ -32,8 +35,9 @@ public class VehicleInventoryServiceImpl implements VehicleInventoryService {
 		return vehicleInventoryDao.updateVehicle(vehicle);
 	}
 
-	public void deleteVehicle() throws SQLException {
-		vehicleInventoryDao.deleteVehicle();
+	@Override
+	public boolean deleteVehicle() throws SQLException {
+		return vehicleInventoryDao.deleteVehicle();
 	}
 
 }
