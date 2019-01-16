@@ -2,7 +2,10 @@ package com.vehicleinventory.utils;
 
 import com.vehicleinventory.model.Vehicle;
 import com.vehicleinventory.model.VehicleType;
-
+/**
+ * @author RameshReddy Komma
+ *
+ */
 public class VehicleBuilder {
 
 	private Vehicle vehicle;
